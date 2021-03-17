@@ -4,10 +4,10 @@ from torchvision import models
 
 
 class VqaModel(nn.Module):
-	def __init__(self, embed_size, qst_vocab_size, ansVocab_size, word_embed_size, num_layers, hidden_size):
+	def __init__(self, embed_size, qstVocab_size, ansVocab_size, word_embed_size, num_layers, hidden_size):
 		super(VqaModel, self).__init__()
 		self.img_encoder = ImgEncoder(embed_size)
-		self.qst_encoder = QstEncoder(qst_vocab_size, word_embed_size, embed_size, num_layers, hidden_size)
+		self.qst_encoder = QstEncoder(qstVocab_size, word_embed_size, embed_size, num_layers, hidden_size)
 		self.tanh = nn.Tanh()
 		self.fc = nn.Linear(embed_size, ansVocab_size)
 

@@ -9,3 +9,5 @@ TRAIN = {"mscoco": ["train2014"], "abstract_v002": ["train2015", "train2017"]}
 VALIDATION = {"mscoco": ["val2014"], "abstract_v002": ["val2015", "val2017"]}
 TEST = {"mscoco": ["test2015"], "abstract_v002": ["test2015"]}
 
+DIR_DATA = "datasets"  # directory name of transferred datasets in `preparation`
+DIR_MODELS = "saved_models"  # directory name of saved models `Experiment`

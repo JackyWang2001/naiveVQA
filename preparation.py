@@ -74,8 +74,8 @@ def load_dataset(mode, trainFile="train.npy", validFile="valid.npy",
 	# load savedVocab
 	ansVocab, _ = vocabulary.load_vocab(ansFilename, qstFilename)
 	savedAnsSet = set(ansVocab.wordList)
-	trainPath = os.path.join("datasets", trainFile)
-	validPath = os.path.join("datasets", validFile)
+	trainPath = os.path.join(C.DIR_DATA, trainFile)
+	validPath = os.path.join(C.DIR_DATA, validFile)
 	# if no saved files, call `prepare()` and save it
 	if not (os.path.exists(trainPath) and os.path.exists(validPath)):
 		train, validation = [], []
