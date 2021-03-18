@@ -13,7 +13,7 @@ dataSubtype = "train2014"
 # preparation.prepare(C.ROOT, dataType, dataSubtype, set(), taskType="OpenEnded")
 
 exp = Experiment()
-exp.run(10)
+exp.run(5)
 
 
 print()

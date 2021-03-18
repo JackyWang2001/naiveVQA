@@ -47,13 +47,13 @@ class Experiment(object):
 			# train
 			trainLoss = self.train()
 			trainLosses.append(trainLoss)
-			print("%d epoch, training loss = %d" % (epoch, trainLoss))
+			print("%d epoch, training loss = %.2f" % (epoch, trainLoss))
 			print("%d epoch, taken %d seconds" % (epoch, time.time() - start_time))
 			# # validation
 			# validLoss = self.valid()
 			# validLosses.append(validLoss)
 			# print("%d epoch, validation loss = %d" % (epoch, validLoss))
-		self.save_model(epoch, self.model.state_dict(), self.optimizer.state_dict())
+			self.save_model(epoch, self.model.state_dict(), self.optimizer.state_dict())
 		return trainLosses, validLosses
 
 	def train(self):
@@ -69,8 +69,7 @@ class Experiment(object):
 				# backpropagation
 				loss.backward()
 				self.optimizer.step()
-				training_loss += loss.item()
-		training_loss = training_loss / len(self.trainLoader)
+				training_loss += loss.item() / len(self.trainLoader)
 		return training_loss
 
 	def valid(self):
