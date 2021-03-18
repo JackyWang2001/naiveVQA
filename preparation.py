@@ -16,9 +16,10 @@ def prepare(root, dataType, dataSubtype, validAnsSet, taskType="OpenEnded"):
 	:param validAnsSet: answer vocabulary (i.e. answers containing unknown vocab is invalid)
 	:param taskType: 'MultipleChoice' or 'OpenEnded'. We only consider 'OpenEnded' here.
 	:return: list of length=num_questions, each entry is a dict with following keys: {image_name, image_path,
-		     question_id, question_tokens, question_string, all_answers, valid_answers}
+		     question_id, question_tokens, question_string, all_answers, valid_answers, question_len}
 	"""
 	imgDir = os.path.join(root, "Images")
+	tokenizer = nltk.tokenize.TweetTokenizer()  # deal with ' better
 	# initialize the locations of files
 	imgNameFormat, annPath, qstPath = utils.formName(root, dataType, dataSubtype, taskType)
 	# load annotations, save as dict {key=qstID, value=ann}
@@ -42,10 +43,11 @@ def prepare(root, dataType, dataSubtype, validAnsSet, taskType="OpenEnded"):
 		qstStr = qst["question"]
 		imgName = imgNameFormat % imgID
 		imgPath = os.path.join(imgDir, imgName)
-		qstToken = nltk.tokenize.word_tokenize(qstStr)
+		qstToken = tokenizer.tokenize(qstStr)  # a list of tokens
+		qstLen = len(qstToken)  # for attention
 		imgInfo = dict(image_name=imgName, image_path=imgPath,
 		               question_id=qstID, question_tokens=qstToken,
-		               question_string=qstStr)
+		               question_string=qstStr, question_len=qstLen)
 		# load answers for train or validation
 		ann = qst2ann_dict[qstID]
 		allAns = [a["answer"] for a in ann["answers"]]

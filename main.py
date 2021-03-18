@@ -3,15 +3,17 @@ import dataset
 import vocabulary
 import preparation
 import constants as C
+from experiment import Experiment
 
-
-from torch.utils.data import DataLoader
+from PIL import ImageFile
+ImageFile.LOAD_TRUNCATED_IMAGES = True
 
 dataType = "mscoco"
 dataSubtype = "train2014"
 # preparation.prepare(C.ROOT, dataType, dataSubtype, set(), taskType="OpenEnded")
 
-dataset = dataset.VQAv2Dataset("train")
-loader = DataLoader(dataset)
+exp = Experiment()
+exp.run(10)
+
 
 print()

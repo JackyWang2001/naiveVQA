@@ -55,4 +55,3 @@ class VQAv2Dataset(Dataset):
 		img = self.transform(img)
 		return img, ans2idx, qst2idx
 
-

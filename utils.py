@@ -17,7 +17,7 @@ def formName(root, dataType, dataSubtype, taskType="OpenEnded"):
 		qstFilename = C.VERSION + "%s_%s_%s_questions.json" % (taskType, dataType, dataSubtype)
 	else:  # dataType == "abstract_v002"
 		imgFolder = "scene_img_" + dataType + "_" + dataSubtype
-		imgNameFormat = os.path.join(imgFolder, dataType + "_" + dataSubtype + "_%012d" + ".png")
+		imgNameFormat = os.path.join(imgFolder, dataType + "_" + dataSubtype[:-4] + "2015_%012d" + ".png")
 		annFilename = "%s_%s_annotations.json" % (dataType, dataSubtype)
 		qstFilename = "%s_%s_%s_questions.json" % (taskType, dataType, dataSubtype)
 	annPath = os.path.join(root, "Annotations", annFilename)

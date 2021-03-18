@@ -3,9 +3,10 @@ import torch.nn as nn
 from torchvision import models
 
 
-class VqaModel(nn.Module):
+class VqaSimpleBaseline(nn.Module):
+	""" Simple VQA Model """
 	def __init__(self, embed_size, qstVocab_size, ansVocab_size, word_embed_size, num_layers, hidden_size):
-		super(VqaModel, self).__init__()
+		super(VqaSimpleBaseline, self).__init__()
 		self.img_encoder = ImgEncoder(embed_size)
 		self.qst_encoder = QstEncoder(qstVocab_size, word_embed_size, embed_size, num_layers, hidden_size)
 		self.tanh = nn.Tanh()
@@ -16,7 +17,7 @@ class VqaModel(nn.Module):
 		qst_feature = self.qst_encoder(qst)  # [batch_size, embed_size]
 		y = torch.mul(img_feature, qst_feature)  # [batch_size, embed_size]
 		y = self.tanh(y)
-		y = self.fc(y)  # [batch_size, ans_vocab_size=1000]
+		y = self.fc(y)  # [batch_size, ansVocab_size]
 		return y
 
 
@@ -54,7 +55,7 @@ class QstEncoder(nn.Module):
 		qst_feature = qst_feature.reshape(qst_feature.size()[0], -1)  # [batch_size, 2*num_layers*hidden_size]
 		qst_feature = self.tanh(qst_feature)
 		qst_feature = self.fc(qst_feature)  # [batch_size, embed_size]
-		return  qst_feature
+		return qst_feature
 
 
 
