@@ -78,7 +78,7 @@ class Experiment(object):
 		self.scheduler.step()
 		return training_loss
 
-	def valid(self):
+	def valid(self):  # due to training time concern, no validation
 		self.model.eval()
 		validation_loss = 0.0
 		# with torch.no_grad():
@@ -89,6 +89,7 @@ class Experiment(object):
 
 	def load_model(self):
 		if os.path.exists(self.model_path):
+			print("Load model")
 			state = torch.load(self.model_path)
 			self.model.load_state_dict(state["modelState"])
 			self.optimizer.load_state_dict(state["optState"])
@@ -98,7 +99,7 @@ class Experiment(object):
 		           os.path.join(self.model_path))
 
 	def test(self, img_path, qst):
-		self.load_model()
+		print(qst)
 		tokenizer = nltk.tokenize.TweetTokenizer()
 		self.model.to("cpu")
 		img_path = os.path.join(C.DIR_EXP, img_path)
