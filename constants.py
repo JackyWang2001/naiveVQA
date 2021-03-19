@@ -11,3 +11,4 @@ TEST = {"mscoco": ["test2015"], "abstract_v002": ["test2015"]}
 
 DIR_DATA = "datasets"  # directory name of transferred datasets in `preparation`
 DIR_MODELS = "saved_models"  # directory name of saved models `Experiment`
+DIR_EXP = "exp_images"

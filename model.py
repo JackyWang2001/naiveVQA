@@ -10,14 +10,20 @@ class VqaSimpleBaseline(nn.Module):
 		self.img_encoder = ImgEncoder(embed_size)
 		self.qst_encoder = QstEncoder(qstVocab_size, word_embed_size, embed_size, num_layers, hidden_size)
 		self.tanh = nn.Tanh()
-		self.fc = nn.Linear(embed_size, ansVocab_size)
+		self.dropout = nn.Dropout(0.5)
+		self.fc1 = nn.Linear(embed_size, ansVocab_size)
+		self.fc2 = nn.Linear(ansVocab_size, ansVocab_size)
 
 	def forward(self, img, qst):
 		img_feature = self.img_encoder(img)  # [batch_size, embed_size]
 		qst_feature = self.qst_encoder(qst)  # [batch_size, embed_size]
 		y = torch.mul(img_feature, qst_feature)  # [batch_size, embed_size]
 		y = self.tanh(y)
-		y = self.fc(y)  # [batch_size, ansVocab_size]
+		y = self.dropout(y)
+		y = self.fc1(y)  # [batch_size, ansVocab_size]
+		y = self.tanh(y)
+		y = self.dropout(y)
+		y = self.fc2(y)
 		return y
 
 
